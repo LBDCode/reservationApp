@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hot Restaurant</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous"
+    />
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <style>
+      .jumbotron {
+        text-align: center;
+      }
+      h1 {
+        font-size: 60px;
+      }
+      .current,
+      .waiting {
+        margin: 1.25rem;
+      }
+      .card {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1><i class="fab fa-gripfire"></i> Hot Restaurant</h1>
+        <hr />
+        <h2>We only have 5 tables! Book your seat before they all are gone!</h3>
+            <br>
+
+        <a href="/reserve"
+          ><button class="btn btn-danger btn-lg">
+                <i class="far fa-credit-card"></i> Make Reservation
+          </button></a
+        >
+        <a href="/"
+          ><button class="btn btn-primary btn-lg">
+                <i class="fas fa-home"></i>
+          </button></a
+        >
+      </div>
+      <div class="tableDiv">
+      <div class="card">
+            <div class="card-header">
+                Current Reservations
+            </div>
+            <div class="card current">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Waiting List
+            </div>
+            <div class="card waiting">
+            </div>
+        </div>
+      </div>  
+      <p><a id= "clear" href="tables">Clear all tables</a> | <a href="/api/tables">API Table Link</a> | <a href="/api/waiting">API Wait List</a></p>
+    </div>
+
+     <script type="text/javascript">
+      //clears all tables
+      $("#clear").on("click", function() {
+        var currentPage = window.location.origin;
+        $.ajax({url: currentPage + "/api/tables", method:"DELETE"})
+                .done(function(data) {
+                  console.log(data);
+                }) 
+        seatedTables();
+        waitList();
+      });
+
+      // calls clearItem on button click
+      $(".tableDiv").on("click", "button", function() {
+        var item = $(this).attr("id");
+        clearItem(item);
+      });
+      
+      function clearItem(itemID) {
+        alert(itemID);
+
+      }
+
+
+      //populates current seated tables
+      function seatedTables() {
+ 
+          var currentPage = window.location.origin;
+ 
+          $.ajax({url: currentPage + "/api/tables", method:"GET"})
+          .done(function(data) {
+ 
+             console.log(data)
+             for (var i = 0; i < data.length; i++) {
+                 var tableNum = i + 1;
+                 var tableCard = $("<div>");
+                 var clearBtn = $("<button>");
+                 var tableText = $("<h3>");
+
+                 clearBtn.attr("type", "button");
+                 clearBtn.attr("id", data[i].id);
+                 clearBtn.addClass("btn").addClass("btn-sm").addClass("btn-secondary").addClass("clear-item");
+                 clearBtn.append("Clear Table");                 
+                      
+                 tableText.append("Table  " + tableNum + " : " + data[i].name);
+                 
+                 tableCard.addClass("card-body");
+                 tableCard.append(tableText);
+                 tableCard.append(clearBtn);
+
+                 $(".current").append(tableCard);
+             }
+          })
+      };
+      
+      //populates waitlist
+      function waitList(){
+         var currentPage  = window.location.origin;
+
+         $.ajax({url: currentPage + "/api/waiting", method:"GET"})
+         .done(function(data) {
+             for (var i = 0; i < data.length; i++) {
+                var waitPosition = i + 1;
+                var waitCard = $("<div>");
+                var waitText = $("<h3>");
+
+                waitCard.addClass("card-body");                
+                waitText.append("Waitlist " + waitPosition + " : " + data[i].name);
+                waitCard.append(waitText);
+
+                $(".waiting").append(waitCard);
+             }           
+
+         });       
+     };
+ 
+      seatedTables();
+      waitList();
+ 
+      
+   </script>
+  </body>
+</html>

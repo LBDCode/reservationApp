@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hot Restaurant</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous"
+    />
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <style>
+      .jumbotron {
+        text-align: center;
+      }
+      h1 {
+        font-size: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1><i class="fab fa-gripfire"></i> Hot Restaurant</h1>
+        <hr />
+        <h2>We only have 5 tables! Book your seat before they all are gone!</h3>
+            <br>
+        <a href="/tables"
+          ><button class="btn btn-primary btn-lg">
+            <i class="fas fa-list-ul"></i> View Tables
+          </button></a
+        >
+
+        <a href="/reserve"
+          ><button class="btn btn-danger btn-lg">
+              <i class="far fa-credit-card"></i> Make Reservation
+          </button></a
+        >
+      </div>
+      <p><a href="/api/tables">API Table Link</a> | <a href="/api/waiting">API Wait List</a></p>
+    </div>
+
+    <script type="text/javascript"></script>
+  </body>
+</html>
